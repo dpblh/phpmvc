@@ -55,7 +55,6 @@ class Route
 	*/
 	public static function Start() {
 
-
 		try{
 			$rout = self::get_route();
 			self::class_loader($rout);

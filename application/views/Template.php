@@ -4,7 +4,7 @@
 	</head>
 	<body>
 		<?php 
-			include APP_PATH.'/application/views/View_'.$view_name.'.php';
+			include APP_PATH.'/application/views/'.$view_name.'.php';
 		 ?>
 	</body>
 </html>

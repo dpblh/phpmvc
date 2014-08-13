@@ -13,7 +13,7 @@ class Controller_404 extends Controller
 
 	public function index() {
 		$view = new View();
-		$view->render('404');
+		$view->render('404/index');
 	}
 }
 

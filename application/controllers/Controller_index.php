@@ -14,19 +14,19 @@ class Controller_index extends Controller
 	public function index() {
 		$model = new Model_index();
 		$view = new View();
-		$view->render('index', $model->getName());
+		$view->render('index/index', $model->getName());
 	}
 
 	public function one() {
 		$model = new Model_index();
 		$view = new View();
-		$view->render('one', $model->getName());	
+		$view->render('index/one', $model->getName());	
 	}
 
 	public function create() {
 		$model = new Model_index();
 		$view = new View();
-		$view->render('create', $model->getParams());	
+		$view->render(array('controller'=>'index', 'action'=>'create'), $model->getParams());	
 	}
 }
 
