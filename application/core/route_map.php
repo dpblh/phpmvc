@@ -1,11 +1,14 @@
 <?php 
-	Route::root('index', 'index');
-	Route::get('/index/index', 'index', 'index');
-	Route::get('/index/one', 'index', 'one');
 	Route::get('/index', 'index', 'index');
+	Route::post('/index', 'index', 'create');
+	Route::get('/index/niw', 'index', 'niw');
+	Route::put('/index/(:id)', 'index', 'update');
+	Route::delete('/index/(:id)', 'index', 'destroy');
+	Route::get('/index/(:id)', 'index', 'show');
+	Route::get('/index/(:id)/edit', 'index', 'edit');
+
+
+
 	Route::get('/404', '404', 'index');
-
-	Route::post('/index/create', 'index', 'create');
-
-
+	Route::root('index', 'index');
  ?>
