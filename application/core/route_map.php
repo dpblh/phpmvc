@@ -1,4 +1,7 @@
 <?php 
+
+	use core\Route as Route;
+
 	Route::get('/index', 'index', 'index');
 	Route::post('/index', 'index', 'create');
 	Route::get('/index/niw', 'index', 'niw');

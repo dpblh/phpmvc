@@ -1,7 +1,7 @@
 <?php 
 namespace controller
 
-use models\Modek_index as Model;
+use models\Model_index as Model;
 /**
 * 
 */

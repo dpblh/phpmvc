@@ -1,7 +1,7 @@
 <?php 
 
 function isget() {
-	return $_SERVER['REQUEST_METHOD'] == 'GET';	
+	return (bool)$_SERVER['REQUEST_METHOD'] == 'GET';	
 }
 
 
