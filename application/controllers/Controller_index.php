@@ -27,13 +27,13 @@ class Controller_index extends Controller
 
 	// POST /index
 	public function create() {
-		$model = new Model();
+		Model::save($this->params);
 		$this->redirect('index');
 	}
 
 	// DELETE /index/1
 	public function destroy() {
-		echo 'destroy';
+		Model::delete($this->params['id']);
 		$this->redirect('index');
 	}
 

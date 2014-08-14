@@ -13,13 +13,6 @@ class Model_index extends Model
 		# code...
 	}
 
-	public function getName() {
-		return "Tim";
-	}
-
-	public function getParams() {
-		return $_POST['firstName'];
-	}
 }
 
 ?>
