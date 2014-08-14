@@ -1,22 +1,22 @@
 <?php 
 
 function isget() {
-	return (bool)$_SERVER['REQUEST_METHOD'] == 'GET';	
+	return $_SERVER['REQUEST_METHOD'] == 'GET';	
 }
 
 
 function ispost() {
-	return (bool)$_SERVER['REQUEST_METHOD'] == 'POST';	
+	return $_SERVER['REQUEST_METHOD'] == 'POST';	
 }
 
 
 function isput() {
-	return (bool)($_SERVER['REQUEST_METHOD'] == 'PUT' || $_POST['_method'] == 'put');	
+	return ($_SERVER['REQUEST_METHOD'] == 'PUT' || $_POST['_method'] == 'put');	
 }
 
 
 function isdelete() {
-	return (bool)($_SERVER['REQUEST_METHOD'] == 'DELETE' || $_POST['_method'] == 'delete');	
+	return ($_SERVER['REQUEST_METHOD'] == 'DELETE' || $_POST['_method'] == 'delete');	
 }
 
- ?>
+?>

@@ -1,7 +1,7 @@
 <?php 
-namespace core
+namespace core;
 
-use controller;
+use controllers;
 /**
 * 
 */
@@ -57,15 +57,8 @@ class Route
 	*/
 	public static function Start() {
 
-		try{
-			$rout = self::get_route();
-			self::class_loader($rout);
-			self::cell_action($rout);
-		} catch(Exception $e) {
-			header('Location: /404');
-			exit;
-		}
-
+		$rout = self::get_route();
+		self::cell_action($rout);
 
 	}
 
@@ -87,24 +80,21 @@ class Route
 	}
 
 	private static function cell_action($route) {
-		$controller_name = 'controller\Controller_'.$route['controller'];
-		$controller = new $controller_name;
+		$controller_name = 'controllers\Controller_'.$route['controller'];
+		try{
+			if(class_exists($controller_name)){
+				$controller = new $controller_name;
+			}
+		}catch(\LogicException $e){
+			header('Location: /404');
+			exit;
+			
+		}
 		$action_name = $route['action'];
 		$params = self::getParams($_SERVER["REQUEST_URI"], $route['params_name']);
 		$controller->params = $params;
 		$controller->$action_name();
 	}
-
-	// private static function class_loader($route) {
-	// 	if(file_exists(APP_PATH.'/application/models/Model_'.$route['controller'].'.php')){
-	// 		include APP_PATH.'/application/models/Model_'.$route['controller'].'.php';
-	// 	}
-	// 	if(file_exists(APP_PATH.'/application/controllers/Controller_'.$route['controller'].'.php')){
-	// 		include APP_PATH.'/application/controllers/Controller_'.$route['controller'].'.php';
-	// 	}else{
-	// 		throw new Exception();
-	// 	}
-	// }
 
 	private static function create_path_info($protocol, $url_template, $controller, $action) {
 		$url_template_info = self::create_path_matcher($url_template);

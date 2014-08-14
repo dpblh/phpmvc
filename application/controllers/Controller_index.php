@@ -1,7 +1,8 @@
 <?php 
-namespace controller
+namespace controllers;
 
 use models\Model_index as Model;
+use core\Controller as Controller;
 /**
 * 
 */
@@ -32,6 +33,7 @@ class Controller_index extends Controller
 
 	// DELETE /index/1
 	public function destroy() {
+		echo 'destroy';
 		$this->redirect('index');
 	}
 

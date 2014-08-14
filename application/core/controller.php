@@ -1,5 +1,5 @@
 <?php 
-namespace core
+namespace core;
 
 use core\View as View;
 /**

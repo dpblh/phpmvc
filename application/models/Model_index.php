@@ -1,5 +1,5 @@
 <?php 
-namespace models
+namespace models;
 
 use core\Model as Model;
 /**

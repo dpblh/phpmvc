@@ -5,8 +5,10 @@ php_value date.timezone "Europe/Moscow"
 php_flag display_errors on
 
 
-RewriteEngine on
-RewriteCond %{REQUEST_FILENAME} !-f
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-f 
 RewriteCond %{REQUEST_FILENAME} !-d
 
 RewriteRule .* index.php [L]
+
