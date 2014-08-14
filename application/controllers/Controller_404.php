@@ -1,5 +1,7 @@
 <?php 
+namespace controller
 
+use core\Controller as Controller;
 /**
 * 
 */
@@ -12,8 +14,7 @@ class Controller_404 extends Controller
 	}
 
 	public function index() {
-		$view = new View();
-		$view->render('404/index');
+		$this->render('404/index');
 	}
 }
 

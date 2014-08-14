@@ -1,5 +1,7 @@
 <?php 
+namespace core
 
+use controller;
 /**
 * 
 */
@@ -85,7 +87,7 @@ class Route
 	}
 
 	private static function cell_action($route) {
-		$controller_name = 'Controller_'.$route['controller'];
+		$controller_name = 'controller\Controller_'.$route['controller'];
 		$controller = new $controller_name;
 		$action_name = $route['action'];
 		$params = self::getParams($_SERVER["REQUEST_URI"], $route['params_name']);
@@ -93,16 +95,16 @@ class Route
 		$controller->$action_name();
 	}
 
-	private static function class_loader($route) {
-		if(file_exists(APP_PATH.'/application/models/Model_'.$route['controller'].'.php')){
-			include APP_PATH.'/application/models/Model_'.$route['controller'].'.php';
-		}
-		if(file_exists(APP_PATH.'/application/controllers/Controller_'.$route['controller'].'.php')){
-			include APP_PATH.'/application/controllers/Controller_'.$route['controller'].'.php';
-		}else{
-			throw new Exception();
-		}
-	}
+	// private static function class_loader($route) {
+	// 	if(file_exists(APP_PATH.'/application/models/Model_'.$route['controller'].'.php')){
+	// 		include APP_PATH.'/application/models/Model_'.$route['controller'].'.php';
+	// 	}
+	// 	if(file_exists(APP_PATH.'/application/controllers/Controller_'.$route['controller'].'.php')){
+	// 		include APP_PATH.'/application/controllers/Controller_'.$route['controller'].'.php';
+	// 	}else{
+	// 		throw new Exception();
+	// 	}
+	// }
 
 	private static function create_path_info($protocol, $url_template, $controller, $action) {
 		$url_template_info = self::create_path_matcher($url_template);
