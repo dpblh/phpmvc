@@ -29,6 +29,8 @@ abstract class Data_base
 
 	public static function __table_describe($table_name){}
 
+	public static function __findBy($column_name, $value, $table_name){}
+
 	protected static function connect(){}
 
 	protected static function close($connect){}
@@ -40,10 +42,10 @@ abstract class Data_base
 
 	public static function __callStatic($method, $arguments) {
       	$method = '__'.$method;
-		$connect = self::connect();
 		$current_class = get_called_class();
+		$connect = $current_class::connect();
 		$rows = call_user_func_array("$current_class::$method", $arguments);
-		self::close($connect);
+		$current_class::close($connect);
 		return $rows;
     }
 }

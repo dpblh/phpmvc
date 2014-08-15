@@ -18,7 +18,7 @@ class Config
 			// db config
 			"db" => array(
 
-				"db_provider" => 'db\Embeded_data_base',
+				"db_provider" => 'db\MySql_data_base',
 				"host" => "localhost",
 				"port" => "",
 				"user_name" => "root",

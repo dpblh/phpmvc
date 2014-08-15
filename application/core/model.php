@@ -18,7 +18,7 @@ class Model
 
 	public static $data_base;
 
-	protected static $table_name = false;
+	protected static $table_name;
 
 	public static function findAll() {
 		$db = self::$data_base;
@@ -27,33 +27,37 @@ class Model
 
 	public static function findById($id) {
 		$db = self::$data_base;
-		return $db::findById($id, self::getClassName()) or self::thrown();
+		$result = $db::findById($id, self::getClassName()) or self::thrown();
+		return $result;
 	}
 
 	public static function save($model) {
 		$params = self::filter_attribute($model);
 		$db = self::$data_base;
-		return $db::save($params, self::getClassName());
+		$result = $db::save($params, self::getClassName()) or self::thrown();
+		return $result;
 	}
 
 	public static function update($model) {
 		$params = self::filter_attribute($model);
 		$db = self::$data_base;
-		$db::update($params, self::getClassName());
+		$result = $db::update($params, self::getClassName()) or self::thrown();
+		return $result;
 	}
 
 	public static function delete($model) {
 		$db = self::$data_base;
-		$db::delete($model['id'], self::getClassName());
+		return $db::delete($model['id'], self::getClassName());
 	}
 
 	public static function select_all($query) {
 		$db = self::$data_base;
-		return $db::select_all($query);
+		return $db::select_all($query) or self::thrown();
 	}
 
 	public static function getClassName() {
-		return self::$table_name or strtolower(substr(strrchr(get_called_class(), "\\"), 1));
+		$current_class = get_called_class();
+		return isset($current_class::$table_name) ? $current_class::$table_name : strtolower(substr(strrchr(get_called_class(), "\\"), 1));
     }
 
 
@@ -71,7 +75,7 @@ class Model
 			$db = self::$data_base;
 			self::$models_attribute[$model_name] = $db::table_describe($model_name);
 		}
-
+		print_r(self::$models_attribute[$model_name]);
 		return self::$models_attribute[$model_name];
 	}
 
@@ -82,6 +86,15 @@ class Model
 		}
 		return $filtred_params;
 	}
+
+	public static function __callStatic($method, $arguments) {
+		if(strrpos($method, 'findBy') == 0){
+			$column_name = substr($method, 6);
+			$db = self::$data_base;
+			$result = $db::findBy($column_name, $arguments[0], self::getClassName());
+			return $result;
+		}
+    }
 
 
 }

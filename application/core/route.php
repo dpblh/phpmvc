@@ -91,15 +91,15 @@ class Route
 			if(class_exists($controller_name)){
 				$controller = new $controller_name;
 			}
+			$action_name = $route['action'];
+			$params = self::getParams($_SERVER["REQUEST_URI"], $route['params_name']);
+			$controller->params = $params;
+			$controller->$action_name();
 		}catch(NotFoundException $e){
-			self::redirect_404();			
+			self::redirect_404();
 		}catch(\LogicException $e){
 			self::redirect_404();			
 		}
-		$action_name = $route['action'];
-		$params = self::getParams($_SERVER["REQUEST_URI"], $route['params_name']);
-		$controller->params = $params;
-		$controller->$action_name();
 	}
 
 	private static function create_path_info($protocol, $url_template, $controller, $action) {

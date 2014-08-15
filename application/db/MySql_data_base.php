@@ -17,7 +17,7 @@ class MySql_data_base extends Data_base
 	}
 
 	public static function __findAll($table_name) {
-		$roWS = mysql_query('select * from '.$table_name) or die('Запрос не удался: ' . mysql_error());
+		$rows = mysql_query('select * from '.$table_name) or die('Запрос не удался: ' . mysql_error());
 		$temp = array();
 		while ($line = mysql_fetch_array($rows, MYSQL_ASSOC)) {
 			$temp[]= $line;
@@ -26,42 +26,53 @@ class MySql_data_base extends Data_base
 	}
 
 	public static function __findById($id, $table_name) {
-		return mysql_fetch_array(mysql_query('select * from '.$table_name.' where id = '.mysql_real_escape_string($id)) or die('Запрос не удался: ' . mysql_error()), MYSQL_ASSOC);
+		return mysql_fetch_array(mysql_query('select * from '.$table_name.' where id = '.mysql_real_escape_string($id)));
 	}
 
 	public static function __save($list_params, $table_name) {
 		$keys_sql = array();
 		$values_sql = array();
+		print_r($list_params);
 		foreach ($list_params as $key => $value) {
 			$keys_sql[]= $key;
 			$values_sql[]= '"'.mysql_real_escape_string($value).'"';
 		}
-		mysql_query('insert into '.$table_name.' ('.implode(', ', $keys_sql).') values ('.implode(', ', $values_sql).')') or die('Вставка не удалась: ' . mysql_error());
+		return mysql_query('insert into '.$table_name.' ('.implode(', ', $keys_sql).') values ('.implode(', ', $values_sql).')');
 	}
 
 	public static function __update($list_params, $table_name) {
 		$update_values = array();
 		$id = $list_params['id'];
-		foreach ($params as $key => $value) {
+		foreach ($list_params as $key => $value) {
 			$update_values[]= $key.'='.'"'.mysql_real_escape_string($value).'"';
 		}
 		mysql_query('update '.$table_name.' set '.implode(', ', $update_values).' where id = '.$id) or die('Обнавление не удалось: ' . mysql_error());
+		return $list_params;
 	}
 
 	public static function __delete($id, $table_name) {
-		mysql_query('delete from '.$table_name.' where id='.mysql_real_escape_string($id)) or die('Удаление не удалось: ' . mysql_error());
+		return mysql_query('delete from '.$table_name.' where id='.mysql_real_escape_string($id));
 	}
 
 	public static function __select_all($query) {
-		$result = mysql_query($query) or die('Запрос не удался: ' . mysql_error());
+		return mysql_query($query);
+	}
+
+	public static function __findBy($column_name, $value, $table_name) {
+		$rows = mysql_query('select * from '.$table_name.' where '.$column_name.'="'.mysql_real_escape_string($value).'"') or die('Запрос не удался: ' . mysql_error());
+		$temp = array();
+		while ($line = mysql_fetch_array($rows, MYSQL_ASSOC)) {
+			$temp[]= $line;
+		}
+		return $temp;
 	}
 
 	public static function __table_describe($table_name) {
 		$columns_name = array();
-		$db_table_describe = mysql_query('DESCRIBE '.$table_name);
-			foreach ($db_table_describe as $key => $value) {
-				$columns_name[]= $value['Field'];
-			}
+		$rows = mysql_query('DESCRIBE '.$table_name);
+		while ($line = mysql_fetch_array($rows, MYSQL_ASSOC)) {
+			$columns_name[]= $line['Field'];
+		}
 		return $columns_name;
 	}
 
@@ -80,9 +91,9 @@ class MySql_data_base extends Data_base
 	}
 
 	protected static function close($connect){
-		if(!$link_connect)	return;
+		if(!$connect)	return;
 
-		mysql_close($link_connect);
+		mysql_close($connect);
 
 		self::$flag_connect = false;
 	}

@@ -52,12 +52,16 @@ class Embeded_data_base extends Data_base
 	}
 
 	public static function __save($list_params, $table_name) {
+		return $list_params;
 	}
 
 	public static function __update($list_params, $table_name) {
+		if(!isset(self::$embeded_storage[$id]))	return false;
+		return self::$embeded_storage[$id];
 	}
 
 	public static function __delete($id, $table_name) {
+		return true;
 	}
 
 	public static function __select_all($query) {

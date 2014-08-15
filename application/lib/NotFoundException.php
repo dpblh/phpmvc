@@ -1,11 +1,11 @@
 <?php 
 namespace lib;
 
-use \Exception as Exception;
+// use \Exception as Exception;
 /**
 * 
 */
-class NotFoundException extends Exception
+class NotFoundException extends \Exception
 {
 	
 	function __construct()

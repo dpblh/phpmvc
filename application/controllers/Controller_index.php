@@ -22,7 +22,7 @@ class Controller_index extends Controller
 
 	// GET /index/1
 	public function show() {
-		$this->render('index/show', Model::findById($this->params['id']));	
+		$this->render('index/show', Model::findById($this->params['id']));
 	}
 
 	// POST /index
@@ -33,7 +33,7 @@ class Controller_index extends Controller
 
 	// DELETE /index/1
 	public function destroy() {
-		Model::delete($this->params['id']);
+		Model::delete($this->params);
 		$this->redirect('index');
 	}
 
