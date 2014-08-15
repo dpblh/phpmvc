@@ -2,6 +2,7 @@
 namespace core;
 
 use controllers;
+use lib\NotFoundException as NotFoundException;
 /**
 * 
 */
@@ -64,6 +65,11 @@ class Route
 
 	//private block
 
+	private static function redirect_404() {
+		header('Location: /404');
+		exit;
+	}
+
 	private static function get_route() {
 		$protocol = self::protocol();
 		foreach ($protocol as $key => $val) {
@@ -85,10 +91,10 @@ class Route
 			if(class_exists($controller_name)){
 				$controller = new $controller_name;
 			}
+		}catch(NotFoundException $e){
+			self::redirect_404();			
 		}catch(\LogicException $e){
-			header('Location: /404');
-			exit;
-			
+			self::redirect_404();			
 		}
 		$action_name = $route['action'];
 		$params = self::getParams($_SERVER["REQUEST_URI"], $route['params_name']);

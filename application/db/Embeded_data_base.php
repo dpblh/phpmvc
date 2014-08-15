@@ -47,6 +47,7 @@ class Embeded_data_base extends Data_base
 	}
 
 	public static function __findById($id, $table_name) {
+		if(!isset(self::$embeded_storage[$id]))	return false;
 		return self::$embeded_storage[$id];
 	}
 

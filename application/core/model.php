@@ -3,6 +3,7 @@ namespace core;
 
 
 use config\Config as Config;
+use lib\NotFoundException as NotFoundException;
 
 /**
 * 
@@ -26,7 +27,7 @@ class Model
 
 	public static function findById($id) {
 		$db = self::$data_base;
-		return $db::findById($id, self::getClassName());
+		return $db::findById($id, self::getClassName()) or self::thrown();
 	}
 
 	public static function save($model) {
@@ -57,6 +58,10 @@ class Model
 
 
 	//private block
+
+	protected static function thrown(){
+		throw new NotFoundException();
+	}
 
 	private static $models_attribute = array();
 
