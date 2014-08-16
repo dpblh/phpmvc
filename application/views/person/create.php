@@ -1,4 +1,4 @@
-<form action="/index" method="post">
+<form action="/person" method="post">
 	<table>
 		<tr>
 			<td>lastName</td>

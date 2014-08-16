@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 	<title>phpmvc</title>
 	<head>
 		<meta charset="utf-8">
@@ -8,8 +8,25 @@
 		<script type="text/javascript" src="/public/javascripts/bootstrap.min.js"></script>
 	</head>
 	<body>
-		<?php 
-			include APP_PATH.'/application/views/'.$view_name.'.php';
-		 ?>
+	<header>
+		<div class="navbar">
+			<div class="navbar-inner">
+		    	<a class="brand" href="/">Home</a>
+		    </div>
+		</div>
+	</header>
+	<div class="content-fluid">
+		<div class="row-fluid">
+			<div class="span2">
+				<!-- side -->
+			</div>
+			<div class="span8">
+				<?php 
+					include APP_PATH.'/application/views/'.$view_name.'.php';
+				 ?>
+			</div>
+			<div class="span2"></div>
+		</div>
+	</div>
 	</body>
 </html>

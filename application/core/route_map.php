@@ -2,16 +2,16 @@
 
 	use core\Route as Route;
 
-	Route::get('/index', 'index', 'index');
-	Route::post('/index', 'index', 'create');
-	Route::get('/index/niw', 'index', 'niw');
-	Route::put('/index/(:id)', 'index', 'update');
-	Route::delete('/index/(:id)', 'index', 'destroy');
-	Route::get('/index/(:id)', 'index', 'show');
-	Route::get('/index/(:id)/edit', 'index', 'edit');
+	Route::get('/person', 'person', 'index');
+	Route::post('/person', 'person', 'create');
+	Route::get('/person/niw', 'person', 'niw');
+	Route::put('/person/(:id)', 'person', 'update');
+	Route::delete('/person/(:id)', 'person', 'destroy');
+	Route::get('/person/(:id)', 'person', 'show');
+	Route::get('/person/(:id)/edit', 'person', 'edit');
 
 
 
 	Route::get('/404', '404', 'index');
-	Route::root('index', 'index');
+	Route::root('person', 'index');
  ?>
