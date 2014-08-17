@@ -18,6 +18,6 @@
 	</tbody>
 </table>
 
-<?php will_pagination($data) ?>
+<?php will_pagination($data, '/person') ?>
 
 <a href="/person/niw">New Item</a>
