@@ -64,14 +64,21 @@ class Embeded_data_base extends Data_base
 		return true;
 	}
 
-	public static function __select_all($query) {
+	public static function __select_all($query){}
+
+	public static function __select_one($query){}
+
+	public static function __count($table_name){}
+
+	public static function __paging($page, $limit, $table_name){}
+
+	public static function __findBy($hash, $table_name, $like_modify = false, $or_modify = false) {
+		return self::$embeded_storage[$id];
 	}
 
 	public static function __table_describe($table_name) {
 		return array('id', 'lastName', 'firstName');
 	}
-
-
 
 	protected static function connect() {
 	}

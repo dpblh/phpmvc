@@ -6,15 +6,18 @@
 		</tr>
 	</thead>
 	<tbody>
-		<?php foreach ($data as $key => $value) {
-				$item = $data[$key];?>
+		<?php
+			$items = $data['items'];
+			foreach ($items as $key => $value) {?>
 				<tr>
-					<td><?php echo $item['firstName']; ?></td>
-					<td><?php echo $item['lastName']; ?></td>
+					<td><?php echo $value['firstName']; ?></td>
+					<td><?php echo $value['lastName']; ?></td>
 					<td><a href="/person/<?php echo $item['id'] ?>">Show</a></td>
 				</tr>
 			<?php }?>
 	</tbody>
 </table>
+
+<?php will_pagination($data) ?>
 
 <a href="/person/niw">New Item</a>

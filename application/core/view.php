@@ -15,6 +15,7 @@ class View
 		if(is_array($view_name)){
 			$view_name = $view_name['controller'].'/'.$view_name['action'];
 		}
+		include APP_PATH.'/application/helpers/view_helper.php';
 		include APP_PATH.'/application/views/Template.php';
 	}
 }

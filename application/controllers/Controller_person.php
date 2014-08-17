@@ -17,7 +17,9 @@ class Controller_person extends Controller
 
 	// GET /index
 	public function index() {
-		$this->render('person/index', Person::findAll());
+		$limit = isset($this->params['limit']) ? $this->params['limit'] : 2;
+		$page = isset($this->params['page']) ? $this->params['page'] : 1;
+		$this->render('person/index', Person::paging($page, $limit));
 	}
 
 	// GET /index/1

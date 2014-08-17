@@ -17,22 +17,16 @@ class MySql_data_base extends Data_base
 	}
 
 	public static function __findAll($table_name) {
-		$rows = mysql_query('select * from '.$table_name) or die('Запрос не удался: ' . mysql_error());
-		$temp = array();
-		while ($line = mysql_fetch_array($rows, MYSQL_ASSOC)) {
-			$temp[]= $line;
-		}
-		return $temp;
+		return self::convert_all(mysql_query('select * from '.$table_name));
 	}
 
 	public static function __findById($id, $table_name) {
-		return mysql_fetch_array(mysql_query('select * from '.$table_name.' where id = '.mysql_real_escape_string($id)));
+		return self::convert_one(mysql_query('select * from '.$table_name.' where id = '.mysql_real_escape_string($id)));
 	}
 
 	public static function __save($list_params, $table_name) {
 		$keys_sql = array();
 		$values_sql = array();
-		print_r($list_params);
 		foreach ($list_params as $key => $value) {
 			$keys_sql[]= $key;
 			$values_sql[]= '"'.mysql_real_escape_string($value).'"';
@@ -55,11 +49,32 @@ class MySql_data_base extends Data_base
 	}
 
 	public static function __select_all($query) {
-		return mysql_query($query);
+		return self::convert_all(mysql_query($query));
 	}
 
-	public static function __findBy($column_name, $value, $table_name) {
-		$rows = mysql_query('select * from '.$table_name.' where '.$column_name.'="'.mysql_real_escape_string($value).'"') or die('Запрос не удался: ' . mysql_error());
+	public static function __select_one($query) {
+		return self::convert_one(mysql_query($query));
+	}
+
+	public static function __count($table_name) {
+		return self::convert_one(mysql_query('select count(*) from '.$table_name));	
+	}
+
+	public static function __paging($page, $limit, $table_name) {
+		$all = self::count($table_name);
+		$result = self::select_all('select * from '.$table_name.' limit '.($page-1)*$limit.','.$limit);
+		return array('current_page'=>$page, 'all_page'=>$all/$limit, 'limit'=>$limit, 'items'=>$result);
+	}
+
+	public static function __findBy($hash, $table_name, $like_modify = false, $or_modify = false) {
+		$logic = 'and';
+		$equal = '=';
+		if($or_modify)	$logic = 'or';
+		if($like_modify)	$equal = 'like';	
+		foreach ($hash as $key => $value) {
+			$where_values[]= $key.' '.$equal.' '.'"'.mysql_real_escape_string($value).'"';
+		}
+		$rows = mysql_query('select * from '.$table_name.' where '.implode(' '.$logic.' ', $where_values)) or die('Запрос не удался: ' . mysql_error());
 		$temp = array();
 		while ($line = mysql_fetch_array($rows, MYSQL_ASSOC)) {
 			$temp[]= $line;
@@ -96,6 +111,19 @@ class MySql_data_base extends Data_base
 		mysql_close($connect);
 
 		self::$flag_connect = false;
+	}
+
+	private static function convert_all($rows) {
+		$temp = array();
+		while ($line = mysql_fetch_array($rows, MYSQL_ASSOC)) {
+			$temp[]= $line;
+		}
+		return $temp;
+	}
+
+	private static function convert_one($row) {
+		$row = mysql_fetch_array($row);
+		return $row[0];
 	}
 }
 

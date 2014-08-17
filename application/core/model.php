@@ -52,7 +52,22 @@ class Model
 
 	public static function select_all($query) {
 		$db = self::$data_base;
-		return $db::select_all($query) or self::thrown();
+		return $db::select_all($query);
+	}
+
+	public static function select_one($query) {
+		$db = self::$data_base;
+		return $db::select_one($query);	
+	}
+
+	public static function count() {
+		$db = self::$data_base;
+		return $db::count(self::getClassName());	
+	}
+
+	public static function paging($page, $limit) {
+		$db = self::$data_base;
+		return $db::paging($page, $limit, self::getClassName());
 	}
 
 	public static function getClassName() {
@@ -88,10 +103,18 @@ class Model
 	}
 
 	public static function __callStatic($method, $arguments) {
-		if(strrpos($method, 'findBy') == 0){
+		if($method == 'findBy'){
+			array_splice($arguments, 1, 0, self::getClassName());
+			$db = self::$data_base;
+			$result = call_user_func_array("$db::findBy", $arguments);
+			return $result;
+		}
+		else if(strrpos($method, 'findBy') == 0){
+			$like_modify = false;
+			if(isset($arguments[1]))	$like_modify = true;
 			$column_name = substr($method, 6);
 			$db = self::$data_base;
-			$result = $db::findBy($column_name, $arguments[0], self::getClassName());
+			$result = $db::findBy(array($column_name => $arguments[0]), self::getClassName(), $like_modify);
 			return $result;
 		}
     }

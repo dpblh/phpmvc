@@ -27,9 +27,15 @@ abstract class Data_base
 
 	public static function __select_all($query){}
 
-	public static function __table_describe($table_name){}
+	public static function __select_one($query){}
 
-	public static function __findBy($column_name, $value, $table_name){}
+	public static function __findBy($hash, $table_name, $like_modify = false, $or_modify = false){}
+
+	public static function __count($table_name){}
+
+	public static function __paging($page, $limit, $table_name){}
+
+	public static function __table_describe($table_name){}
 
 	protected static function connect(){}
 
