@@ -17,13 +17,13 @@ abstract class Data_base
 
 	public static function __findAll($table_name){}
 
-	public static function __findById($id, $table_name){}
+	public static function __findById($id, $table_name, $primary_key){}
 
 	public static function __save($list_params, $table_name){}
 
-	public static function __update($list_params, $table_name){}
+	public static function __update($list_params, $table_name, $primary_key){}
 
-	public static function __delete($id, $table_name){}
+	public static function __delete($id, $table_name, $primary_key){}
 
 	public static function __select_all($query){}
 

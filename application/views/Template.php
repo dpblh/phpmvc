@@ -6,6 +6,10 @@
 		<link rel="stylesheet" type="text/css" href="/public/stylesheets/bootstrap.css">
 		<script type="text/javascript" src="/public/javascripts/jquery.js"></script>
 		<script type="text/javascript" src="/public/javascripts/bootstrap.min.js"></script>
+		<script src="http://code.highcharts.com/highcharts.js"></script>
+		<script src="http://code.highcharts.com/modules/exporting.js"></script>
+		<script type="text/javascript" src="/public/javascripts/main.js"></script>
+
 	</head>
 	<body>
 	<header>

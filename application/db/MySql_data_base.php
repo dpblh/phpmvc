@@ -20,8 +20,8 @@ class MySql_data_base extends Data_base
 		return self::convert_all(mysql_query('select * from '.$table_name));
 	}
 
-	public static function __findById($id, $table_name) {
-		return self::convert_one(mysql_query('select * from '.$table_name.' where id = '.mysql_real_escape_string($id)));
+	public static function __findById($id, $table_name, $primary_key) {
+		return self::convert_one(mysql_query('select * from '.$table_name.' where '.$primary_key.' = '.mysql_real_escape_string($id)));
 	}
 
 	public static function __save($list_params, $table_name) {
@@ -34,18 +34,19 @@ class MySql_data_base extends Data_base
 		return mysql_query('insert into '.$table_name.' ('.implode(', ', $keys_sql).') values ('.implode(', ', $values_sql).')');
 	}
 
-	public static function __update($list_params, $table_name) {
+	public static function __update($list_params, $table_name, $primary_key) {
 		$update_values = array();
 		$id = $list_params['id'];
+		unset($list_params['id']);
 		foreach ($list_params as $key => $value) {
 			$update_values[]= $key.'='.'"'.mysql_real_escape_string($value).'"';
 		}
-		mysql_query('update '.$table_name.' set '.implode(', ', $update_values).' where id = '.$id) or die('Обнавление не удалось: ' . mysql_error());
+		mysql_query('update '.$table_name.' set '.implode(', ', $update_values).' where '.$primary_key.' = '.$id) or die('Обнавление не удалось: ' . mysql_error());
 		return $list_params;
 	}
 
-	public static function __delete($id, $table_name) {
-		return mysql_query('delete from '.$table_name.' where id='.mysql_real_escape_string($id));
+	public static function __delete($id, $table_name, $primary_key) {
+		return mysql_query('delete from '.$table_name.' where '.$primary_key.'='.mysql_real_escape_string($id));
 	}
 
 	public static function __select_all($query) {
@@ -57,7 +58,9 @@ class MySql_data_base extends Data_base
 	}
 
 	public static function __count($table_name) {
-		return self::convert_one(mysql_query('select count(*) from '.$table_name));	
+		$row = mysql_query('select count(*) from '.$table_name);	
+		$row = mysql_fetch_array($row);
+		return $row[0];
 	}
 
 	public static function __paging($page, $limit, $table_name) {
@@ -123,7 +126,7 @@ class MySql_data_base extends Data_base
 
 	private static function convert_one($row) {
 		$row = mysql_fetch_array($row);
-		return $row[0];
+		return $row;
 	}
 }
 

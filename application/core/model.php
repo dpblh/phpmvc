@@ -20,6 +20,8 @@ class Model
 
 	protected static $table_name;
 
+	protected static $primary_key;
+
 	public static function findAll() {
 		$db = self::$data_base;
 		return $db::findAll(self::getClassName());
@@ -27,7 +29,7 @@ class Model
 
 	public static function findById($id) {
 		$db = self::$data_base;
-		$result = $db::findById($id, self::getClassName()) or self::thrown();
+		$result = $db::findById($id, self::getClassName(), self::getPrimaryKey()) or self::thrown();
 		return $result;
 	}
 
@@ -41,13 +43,13 @@ class Model
 	public static function update($model) {
 		$params = self::filter_attribute($model);
 		$db = self::$data_base;
-		$result = $db::update($params, self::getClassName()) or self::thrown();
+		$result = $db::update($params, self::getClassName(), self::getPrimaryKey()) or self::thrown();
 		return $result;
 	}
 
 	public static function delete($model) {
 		$db = self::$data_base;
-		return $db::delete($model['id'], self::getClassName());
+		return $db::delete($model['id'], self::getClassName(), self::getPrimaryKey());
 	}
 
 	public static function select_all($query) {
@@ -75,6 +77,11 @@ class Model
 		return isset($current_class::$table_name) ? $current_class::$table_name : strtolower(substr(strrchr(get_called_class(), "\\"), 1));
     }
 
+    public static function getPrimaryKey() {
+    	$current_class = get_called_class();
+		return isset($current_class::$primary_key) ? $current_class::$primary_key : 'id';
+    }
+
 
 	//private block
 
@@ -99,6 +106,7 @@ class Model
 		foreach (self::model_attribute() as $key => $value) {
 			if(isset($params[$value]) && strlen($params[$value]) != 0) $filtred_params[$value] = $params[$value];
 		}
+		if(isset($params['id']))	$filtred_params['id'] = $params['id'];
 		return $filtred_params;
 	}
 

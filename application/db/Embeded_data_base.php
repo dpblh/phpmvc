@@ -46,7 +46,7 @@ class Embeded_data_base extends Data_base
 		return self::$embeded_storage;
 	}
 
-	public static function __findById($id, $table_name) {
+	public static function __findById($id, $table_name, $primary_key) {
 		if(!isset(self::$embeded_storage[$id]))	return false;
 		return self::$embeded_storage[$id];
 	}
@@ -55,12 +55,12 @@ class Embeded_data_base extends Data_base
 		return $list_params;
 	}
 
-	public static function __update($list_params, $table_name) {
+	public static function __update($list_params, $table_name, $primary_key) {
 		if(!isset(self::$embeded_storage[$id]))	return false;
 		return self::$embeded_storage[$id];
 	}
 
-	public static function __delete($id, $table_name) {
+	public static function __delete($id, $table_name, $primary_key) {
 		return true;
 	}
 
