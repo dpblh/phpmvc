@@ -29,4 +29,4 @@
 
 <?php will_pagination($data, '/customer_contact') ?>
 
-<a href="/customer_contact/niw">New Item</a>
+<!-- <a href="/customer_contact/niw">New Item</a> -->
