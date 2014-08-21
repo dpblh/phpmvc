@@ -56,8 +56,8 @@ class Embeded_data_base extends Data_base
 	}
 
 	public static function __update($list_params, $table_name) {
-		if(!isset(self::$embeded_storage[$id]))	return false;
-		return self::$embeded_storage[$id];
+		if(!isset(self::$embeded_storage[$list_params['id']]))	return false;
+		return self::$embeded_storage[$list_params['id']];
 	}
 
 	public static function __delete($id, $table_name) {
@@ -70,7 +70,9 @@ class Embeded_data_base extends Data_base
 
 	public static function __count($table_name){}
 
-	public static function __paging($page, $limit, $table_name){}
+	public static function __paging($page, $limit, $table_name){
+		return array('current_page'=>1, 'all_page'=>1, 'limit'=>3, 'items'=> self::$embeded_storage);
+	}
 
 	public static function __findBy($hash, $table_name, $like_modify = false, $or_modify = false) {
 		return self::$embeded_storage[$id];

@@ -12,7 +12,7 @@
 				<tr>
 					<td><?php echo $value['firstName']; ?></td>
 					<td><?php echo $value['lastName']; ?></td>
-					<td><a href="/person/<?php echo $item['id'] ?>">Show</a></td>
+					<td><a href="/person/<?php echo $value['id'] ?>">Show</a></td>
 				</tr>
 			<?php }?>
 	</tbody>
